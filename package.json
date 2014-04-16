@@ -1,0 +1,29 @@
+{
+  "name": "nest-container-intravenous",
+  "version": "0.0.0",
+  "description": "nodejs-intravenous implementation of the nest-container",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hirehead/node-nest-container-intravenous.git"
+  },
+  "keywords": [
+    "nest-container"
+  ],
+  "author": "hirehead",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/hirehead/node-nest-container-intravenous/issues"
+  },
+  "homepage": "https://github.com/hirehead/node-nest-container-intravenous",
+  "dependencies": {
+    "intravenous": "~0.1.4-beta"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.4",
+    "grunt-tsd": "~0.1.0"
+  }
+}
