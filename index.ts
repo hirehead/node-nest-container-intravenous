@@ -18,20 +18,20 @@ class NestContainerIntravenous implements Nest.IContainer {
         this.services = [];
     }
 
-    get < T > (service: string, key ? : string): Nest.IPromise < T > {
+    require < T > (module: string, key ? : string): Nest.IPromise < T > {
         var svc: any;
 
         if (key)
-            svc = this.container.get < any > (service + '-' + key)
+            svc = this.container.get < any > (module + '-' + key)
         else
-            svc = this.container.get < any > (service);
+            svc = this.container.get < any > (module);
 
         return svc && < Nest.IPromise < T >> svc.promis;
     }
 
-    register(name: string, key: string, factory: () => Nest.IPromise < any > ): Nest.IContainer {
+    define(module: string, key: string, factory: () => Nest.IPromise < any > ): Nest.IContainer {
         this.services.push({
-            service: name,
+            service: module,
             key: key,
             factory: factory
         });
@@ -77,12 +77,22 @@ class NestContainerIntravenous implements Nest.IContainer {
     }
 }
 
-module.exports.step = function(app?: Nest.INest) : Nest.INest {
-    app.container = new NestContainerIntravenous();
-    return app;
+module.exports.step_init = function(app: Nest.INest, done: () => any) {
+    app.modules.push({
+        name: 'IContainer',
+        key: 'NestContainerIntravenous',
+        instance: new NestContainerIntravenous()
+    });
 }
 
-module.exports.step_start = function(app?: Nest.INest) : Nest.INest {
-    ( < NestContainerIntravenous > app.container).start();
-    return app;
+module.exports.step = function(app: Nest.INest, done: () => any) {
+
+    var container = app.modules.filter((v, i, a) => {
+        return v.key === '';
+    })[0];
+
+    if (!container)
+        throw 'NestContainerIntravenous was not found on app. You might forgot to run NestContainerIntravenous init step';
+
+    (<NestContainerIntravenous>container.instance).start();
 }
