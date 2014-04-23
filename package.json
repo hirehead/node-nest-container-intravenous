@@ -1,6 +1,6 @@
 {
   "name": "nest-container-intravenous",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "nodejs-intravenous implementation of the nest-container",
   "main": "index.js",
   "scripts": {
